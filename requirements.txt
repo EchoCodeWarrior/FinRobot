@@ -1,0 +1,7 @@
+streamlit
+python-dotenv
+pyautogen
+finrobot
+google-genai
+yfinance
+pandas
