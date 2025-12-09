@@ -11,120 +11,319 @@ from finrobot.functional import ReportChartUtils, ReportAnalysisUtils, ReportLab
 load_dotenv()
 
 # --- Neo-Brutalism Design System ---
-st.set_page_config(layout="wide", page_title="FinRobot Agent")
+st.set_page_config(layout="wide", page_title="FinRobot Agent", page_icon="📊")
 
 st.markdown("""
 <style>
+    /* Import Font */
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap');
+    
     /* Global Styles */
     .stApp {
-        background-color: #ffffff;
-        color: #000000;
-        font-family: 'Courier New', Courier, monospace;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+        color: #ffffff;
+        font-family: 'Space Mono', monospace;
     }
     
-    /* Buttons */
-    .stButton > button {
-        background-color: #FFDE00; /* Bright Yellow */
-        color: #000000;
-        border: 4px solid #000000;
-        border-radius: 0px;
-        box-shadow: 6px 6px 0px 0px #000000;
-        font-weight: bold;
-        font-size: 16px;
-        transition: all 0.1s;
+    /* Main Container */
+    .main .block-container {
+        padding: 2rem 3rem;
+        max-width: 1400px;
+    }
+    
+    /* Custom Title */
+    .neo-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: #00FF88;
+        text-shadow: 6px 6px 0px #FF00FF, -2px -2px 0px #00FFFF;
+        letter-spacing: -2px;
+        margin-bottom: 0;
+        line-height: 1.1;
+    }
+    
+    .neo-subtitle {
+        font-family: 'Space Mono', monospace;
+        font-size: 1rem;
+        color: #FFD700;
         text-transform: uppercase;
-        padding: 10px 20px;
+        letter-spacing: 4px;
+        margin-top: 0.5rem;
+        padding: 8px 16px;
+        background: rgba(255, 215, 0, 0.1);
+        border: 2px solid #FFD700;
+        display: inline-block;
+    }
+    
+    /* Buttons - Neo Brutalism */
+    .stButton > button {
+        background-color: #00FF88 !important;
+        color: #000000 !important;
+        border: 4px solid #000000 !important;
+        border-radius: 0px !important;
+        box-shadow: 8px 8px 0px 0px #000000 !important;
+        font-family: 'Space Mono', monospace !important;
+        font-weight: 700 !important;
+        font-size: 14px !important;
+        transition: all 0.15s ease !important;
+        text-transform: uppercase !important;
+        padding: 12px 24px !important;
+        letter-spacing: 2px !important;
     }
     .stButton > button:hover {
-        transform: translate(-2px, -2px);
-        box-shadow: 8px 8px 0px 0px #000000;
-        border-color: #000000;
-        background-color: #FFDE00;
-        color: #000000;
+        transform: translate(-4px, -4px) !important;
+        box-shadow: 12px 12px 0px 0px #000000 !important;
+        background-color: #00FFFF !important;
     }
     .stButton > button:active {
-        transform: translate(2px, 2px);
-        box-shadow: 2px 2px 0px 0px #000000;
-        background-color: #00FFFF; /* Cyan on click */
+        transform: translate(4px, 4px) !important;
+        box-shadow: 4px 4px 0px 0px #000000 !important;
+        background-color: #FF00FF !important;
+        color: #ffffff !important;
     }
 
-    /* Inputs */
+    /* Text Inputs - Neo Brutalism */
     .stTextInput > div > div > input {
-        border: 3px solid #000000;
-        border-radius: 0px;
-        box-shadow: 4px 4px 0px 0px #000000;
-        background-color: #ffffff;
-        color: #000000;
-        font-weight: bold;
+        border: 3px solid #00FF88 !important;
+        border-radius: 0px !important;
+        box-shadow: 5px 5px 0px 0px #00FF88 !important;
+        background-color: rgba(0, 255, 136, 0.05) !important;
+        color: #ffffff !important;
+        font-family: 'Space Mono', monospace !important;
+        font-weight: 700 !important;
+        padding: 12px !important;
     }
     .stTextInput > div > div > input:focus {
-        border-color: #FF00FF; /* Magenta */
-        box-shadow: 6px 6px 0px 0px #000000;
+        border-color: #FF00FF !important;
+        box-shadow: 8px 8px 0px 0px #FF00FF !important;
+        background-color: rgba(255, 0, 255, 0.05) !important;
+    }
+    
+    .stTextInput label {
+        color: #00FF88 !important;
+        font-family: 'Space Mono', monospace !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
     }
 
     /* Headers */
     h1, h2, h3 {
-        color: #000000;
-        text-transform: uppercase;
-        font-weight: 900;
-        text-shadow: 3px 3px 0px #FF00FF; /* Magenta Shadow */
+        font-family: 'Space Grotesk', sans-serif !important;
+        color: #ffffff !important;
+        text-transform: uppercase !important;
+        font-weight: 700 !important;
     }
     
-    /* Expanders/Containers */
+    h2 {
+        color: #00FFFF !important;
+        text-shadow: 3px 3px 0px #FF00FF !important;
+    }
+    
+    h3 {
+        color: #FFD700 !important;
+        border-left: 6px solid #FFD700;
+        padding-left: 16px;
+    }
+    
+    /* Expanders - Neo Style */
     .streamlit-expanderHeader {
-        border: 3px solid #000000;
-        border-radius: 0px;
-        background-color: #00FFFF; /* Cyan */
-        color: #000000;
-        font-weight: bold;
-        box-shadow: 4px 4px 0px 0px #000000;
+        border: 3px solid #00FFFF !important;
+        border-radius: 0px !important;
+        background-color: rgba(0, 255, 255, 0.1) !important;
+        color: #00FFFF !important;
+        font-family: 'Space Mono', monospace !important;
+        font-weight: 700 !important;
+        box-shadow: 4px 4px 0px 0px #00FFFF !important;
     }
     
-    /* Tabs */
+    /* Tabs - Neo Brutalism */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 10px;
+        gap: 0px;
+        background-color: transparent;
     }
     .stTabs [data-baseweb="tab"] {
-        height: 50px;
-        background-color: #ffffff;
-        border: 3px solid #000000;
+        height: 60px;
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 3px solid #ffffff;
         border-radius: 0px;
-        box-shadow: 4px 4px 0px 0px #000000;
-        font-weight: bold;
-        color: #000000;
-        margin-bottom: 10px;
+        box-shadow: 5px 5px 0px 0px rgba(255,255,255,0.3);
+        font-family: 'Space Mono', monospace;
+        font-weight: 700;
+        color: #ffffff;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-right: 10px;
+        transition: all 0.15s ease;
+    }
+    .stTabs [data-baseweb="tab"]:hover {
+        background-color: rgba(0, 255, 136, 0.2);
+        border-color: #00FF88;
     }
     .stTabs [data-baseweb="tab"][aria-selected="true"] {
-        background-color: #FF00FF; /* Magenta */
-        color: #ffffff;
-        transform: translate(-2px, -2px);
-        box-shadow: 6px 6px 0px 0px #000000;
+        background-color: #FF00FF !important;
+        color: #ffffff !important;
+        border-color: #000000 !important;
+        transform: translate(-3px, -3px);
+        box-shadow: 8px 8px 0px 0px #000000 !important;
     }
     
-    /* Sidebar */
+    /* Sidebar - Neo Style */
     [data-testid="stSidebar"] {
-        background-color: #f0f0f0;
-        border-right: 4px solid #000000;
+        background: linear-gradient(180deg, #0d0d1a 0%, #1a1a2e 100%);
+        border-right: 4px solid #00FF88;
     }
-
+    
+    [data-testid="stSidebar"] .stMarkdown h2 {
+        color: #00FF88 !important;
+        text-shadow: none !important;
+        border-bottom: 3px solid #00FF88;
+        padding-bottom: 10px;
+    }
+    
+    /* Info/Warning boxes */
+    .stAlert {
+        border-radius: 0px !important;
+        border: 3px solid !important;
+        box-shadow: 5px 5px 0px 0px rgba(0,0,0,0.5) !important;
+    }
+    
+    /* Spinner */
+    .stSpinner > div {
+        border-color: #00FF88 !important;
+    }
+    
+    /* Success message */
+    .stSuccess {
+        background-color: rgba(0, 255, 136, 0.2) !important;
+        border: 3px solid #00FF88 !important;
+        border-radius: 0px !important;
+        box-shadow: 5px 5px 0px 0px #00FF88 !important;
+    }
+    
+    /* Error message */
+    .stError {
+        background-color: rgba(255, 0, 100, 0.2) !important;
+        border: 3px solid #FF0064 !important;
+        border-radius: 0px !important;
+        box-shadow: 5px 5px 0px 0px #FF0064 !important;
+    }
+    
+    /* Divider */
+    hr {
+        border: none;
+        height: 3px;
+        background: linear-gradient(90deg, #00FF88, #00FFFF, #FF00FF);
+        margin: 2rem 0;
+    }
+    
+    /* IMPORTANT: Text visibility fixes */
+    p, span, li, div {
+        color: #ffffff !important;
+    }
+    
+    .stMarkdown p, .stMarkdown li, .stMarkdown span {
+        color: #e0e0e0 !important;
+    }
+    
+    /* Placeholder text */
+    .stTextInput > div > div > input::placeholder {
+        color: rgba(255, 255, 255, 0.5) !important;
+        font-style: italic;
+    }
+    
+    /* Labels and help text */
+    .stTextInput label p {
+        color: #00FF88 !important;
+    }
+    
+    small, .stHelp {
+        color: #888888 !important;
+    }
+    
+    /* Sidebar text */
+    [data-testid="stSidebar"] p, 
+    [data-testid="stSidebar"] span,
+    [data-testid="stSidebar"] li {
+        color: #ffffff !important;
+    }
+    
+    /* Expander content */
+    .streamlit-expanderContent {
+        background-color: rgba(0, 0, 0, 0.3) !important;
+        border: 2px solid #00FFFF !important;
+        border-top: none !important;
+    }
+    
+    .streamlit-expanderContent p {
+        color: #e0e0e0 !important;
+    }
+    
+    /* Card Style */
+    .neo-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 4px solid #00FF88;
+        padding: 24px;
+        box-shadow: 10px 10px 0px 0px #000000;
+        margin: 20px 0;
+    }
+    
+    /* Result Card */
+    .result-card {
+        background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 255, 255, 0.05) 100%);
+        border: 4px solid #00FF88;
+        padding: 24px;
+        box-shadow: 10px 10px 0px 0px rgba(0, 255, 136, 0.5);
+        font-family: 'Space Mono', monospace;
+        color: #ffffff;
+        line-height: 1.8;
+    }
+    
+    /* Hide Streamlit branding */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    
 </style>
 """, unsafe_allow_html=True)
 
-# --- App Logic ---
-st.title("FINROBOT /// AGENTIC ANALYST")
-st.caption("INDIAN STOCK MARKET FOCUS // NSE & BSE")
+# --- App Header ---
+st.markdown("""
+<div style="margin-bottom: 2rem;">
+    <h1 class="neo-title">FINROBOT<br/>AGENTIC ANALYST</h1>
+    <div class="neo-subtitle">🇮🇳 INDIAN STOCK MARKET // NSE & BSE</div>
+</div>
+""", unsafe_allow_html=True)
 
 # Sidebar Configuration
 with st.sidebar:
-    st.header("SYSTEM CONFIG")
+    st.markdown("## ⚙️ SYSTEM CONFIG")
     st.markdown("---")
     
-    google_api_key = st.text_input("GOOGLE API KEY", value=os.environ.get("GOOGLE_API_KEY", ""), type="password", help="For Gemini 1.5 Pro")
-    fmp_api_key = st.text_input("FMP API KEY", value=os.environ.get("FMP_API_KEY", ""), type="password", help="Financial Modeling Prep")
-    finnhub_api_key = st.text_input("FINNHUB API KEY", value=os.environ.get("FINNHUB_API_KEY", ""), type="password", help="Finnhub Stock Data")
+    google_api_key = st.text_input("🔑 GOOGLE API KEY", value=os.environ.get("GOOGLE_API_KEY", ""), type="password", help="For Gemini 1.5 Pro")
+    fmp_api_key = st.text_input("📊 FMP API KEY", value=os.environ.get("FMP_API_KEY", ""), type="password", help="Financial Modeling Prep")
+    finnhub_api_key = st.text_input("📈 FINNHUB API KEY", value=os.environ.get("FINNHUB_API_KEY", ""), type="password", help="Finnhub Stock Data")
     
     st.markdown("---")
-    st.info("Ensure all keys are set for agents to function correctly.")
+    
+    # Status indicators
+    st.markdown("### 🔌 CONNECTION STATUS")
+    col_s1, col_s2 = st.columns(2)
+    with col_s1:
+        if google_api_key:
+            st.markdown("🟢 **GOOGLE**")
+        else:
+            st.markdown("🔴 **GOOGLE**")
+    with col_s2:
+        if fmp_api_key:
+            st.markdown("🟢 **FMP**")
+        else:
+            st.markdown("🔴 **FMP**")
+    
+    if finnhub_api_key:
+        st.markdown("🟢 **FINNHUB**")
+    else:
+        st.markdown("🔴 **FINNHUB**")
 
 # Environment Setup
 if google_api_key:
@@ -141,17 +340,13 @@ if not fmp_api_key: missing_keys.append("FMP")
 if not finnhub_api_key: missing_keys.append("Finnhub")
 
 if missing_keys:
-    st.warning(f"MISSING API KEYS: {', '.join(missing_keys)}")
+    st.warning(f"⚠️ MISSING API KEYS: {', '.join(missing_keys)}")
 
 # --- Helper Functions ---
 def get_llm_config():
-    # Configuring for Gemini via AutoGen
-    # Use gemini-1.5-pro as requested (fallback) or preview if available.
-    # Note: As of late 2024/2025, AutoGen supports gemini via api_type="google" or "genai" depending on version.
-    # We will use the standard config list format.
     config_list = [
         {
-            "model": "gemini-1.5-pro",
+            "model": "gemini-2.0-flash",
             "api_key": os.environ.get("GOOGLE_API_KEY"),
             "api_type": "google" 
         }
@@ -163,18 +358,32 @@ def get_llm_config():
     }
 
 # Tabs
-tab1, tab2 = st.tabs(["MARKET FORECASTER", "ANNUAL REPORT ANALYZER"])
+tab1, tab2 = st.tabs(["📈 MARKET FORECASTER", "📋 ANNUAL REPORT"])
 
 with tab1:
-    st.subheader("/// MARKET MOMENTUM PREDICTOR")
-    # Content placeholder
+    st.markdown("### 🚀 MARKET MOMENTUM PREDICTOR")
+    st.markdown("*AI-powered stock analysis using real-time market data*")
+    st.markdown("---")
+    
+    # Content layout
     col1, col2 = st.columns([1, 2])
     with col1:
-        ticker_1 = st.text_input("TICKER SYMBOL", value="RELIANCE.NS", help="E.g., RELIANCE.NS, TCS.NS, INFY.NS")
-        run_btn_1 = st.button("RUN FORECAST", key="btn1")
+        st.markdown("#### CONFIGURATION")
+        ticker_1 = st.text_input("TICKER SYMBOL", value="", placeholder="Enter ticker (e.g., RELIANCE.NS)", help="E.g., RELIANCE.NS, TCS.NS, INFY.NS", key="ticker1")
+        st.markdown("")
+        run_btn_1 = st.button("⚡ RUN FORECAST", key="btn1", use_container_width=True)
+        
+        st.markdown("---")
+        st.markdown("##### 💡 TIPS")
+        st.markdown("""
+        - Use `.NS` suffix for NSE stocks
+        - Use `.BO` suffix for BSE stocks
+        - Example: `TCS.NS`, `INFY.NS`
+        """)
     
     with col2:
         output_1 = st.empty()
+
         
     if run_btn_1 and not missing_keys:
         with st.spinner("AGENTS DEPLOYED. ANALYZING MARKET DATA..."):
@@ -235,9 +444,9 @@ with tab1:
                     
                     # Extract the summary or last message
                     summary = chat_res.summary
-                    st.markdown(f"### FORECAST REPORT // {company}")
+                    st.markdown(f"### 📊 FORECAST REPORT // {company}")
                     st.markdown(f"""
-                    <div style="border: 3px solid black; padding: 20px; box-shadow: 5px 5px 0px 0px #000000;">
+                    <div class="result-card">
                         {summary}
                     </div>
                     """, unsafe_allow_html=True)
@@ -256,12 +465,25 @@ with tab1:
          st.error("CONFIGURE API KEYS IN SIDEBAR FIRST.")
 
 with tab2:
-    st.subheader("/// 10-K / ANNUAL REPORT DEEP DIVE")
-    # Content placeholder
+    st.markdown("### 📋 ANNUAL REPORT DEEP DIVE")
+    st.markdown("*Comprehensive financial analysis using AI-powered document parsing*")
+    st.markdown("---")
+    
     col1_2, col2_2 = st.columns([1, 2])
     with col1_2:
-        ticker_2 = st.text_input("COMPANY TICKER", value="TCS.NS", help="E.g., TCS.NS, INFY.NS")
-        run_btn_2 = st.button("ANALYZE REPORT", key="btn2")
+        st.markdown("#### CONFIGURATION")
+        ticker_2 = st.text_input("COMPANY TICKER", value="", placeholder="Enter ticker (e.g., TCS.NS)", help="E.g., TCS.NS, INFY.NS", key="ticker2")
+        st.markdown("")
+        run_btn_2 = st.button("📄 ANALYZE REPORT", key="btn2", use_container_width=True)
+        
+        st.markdown("---")
+        st.markdown("##### 📊 ANALYSIS INCLUDES")
+        st.markdown("""
+        - Balance Sheet Analysis
+        - Income Statement Review
+        - Cash Flow Assessment
+        - Investment Recommendation
+        """)
         
     with col2_2:
         output_2 = st.empty()
@@ -330,9 +552,9 @@ with tab2:
                     st.success("REPORT GENERATION COMPLETE")
                     summary_rep = chat_res_rep.summary
                     
-                    st.markdown(f"### ANNUAL PERFORMANCE REPORT // {company_2}")
+                    st.markdown(f"### 📈 ANNUAL PERFORMANCE REPORT // {company_2}")
                     st.markdown(f"""
-                    <div style="border: 3px solid black; padding: 20px; box-shadow: 5px 5px 0px 0px #000000; background-color: #f9f9f9;">
+                    <div class="result-card">
                         {summary_rep}
                     </div>
                     """, unsafe_allow_html=True)
