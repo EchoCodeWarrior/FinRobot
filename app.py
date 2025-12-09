@@ -346,7 +346,7 @@ if missing_keys:
 def get_llm_config():
     config_list = [
         {
-            "model": "gemini-2.5-flash-lite-preview-06-17",
+            "model": "gemini-2.5-flash-preview-native-audio-dialog",
             "api_key": os.environ.get("GOOGLE_API_KEY"),
             "api_type": "google" 
         }
