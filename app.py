@@ -300,7 +300,7 @@ with st.sidebar:
     st.markdown("## ⚙️ SYSTEM CONFIG")
     st.markdown("---")
     
-    google_api_key = st.text_input("🔑 GOOGLE API KEY", value=os.environ.get("GOOGLE_API_KEY", ""), type="password", help="For Gemini 1.5 Pro")
+    groq_api_key = st.text_input("� GROQ API KEY", value=os.environ.get("GROQ_API_KEY", ""), type="password", help="Get free key at console.groq.com")
     fmp_api_key = st.text_input("📊 FMP API KEY", value=os.environ.get("FMP_API_KEY", ""), type="password", help="Financial Modeling Prep")
     finnhub_api_key = st.text_input("📈 FINNHUB API KEY", value=os.environ.get("FINNHUB_API_KEY", ""), type="password", help="Finnhub Stock Data")
     
@@ -310,10 +310,10 @@ with st.sidebar:
     st.markdown("### 🔌 CONNECTION STATUS")
     col_s1, col_s2 = st.columns(2)
     with col_s1:
-        if google_api_key:
-            st.markdown("🟢 **GOOGLE**")
+        if groq_api_key:
+            st.markdown("🟢 **GROQ**")
         else:
-            st.markdown("🔴 **GOOGLE**")
+            st.markdown("🔴 **GROQ**")
     with col_s2:
         if fmp_api_key:
             st.markdown("🟢 **FMP**")
@@ -326,8 +326,8 @@ with st.sidebar:
         st.markdown("🔴 **FINNHUB**")
 
 # Environment Setup
-if google_api_key:
-    os.environ["GOOGLE_API_KEY"] = google_api_key
+if groq_api_key:
+    os.environ["GROQ_API_KEY"] = groq_api_key
 if fmp_api_key:
     os.environ["FMP_API_KEY"] = fmp_api_key
 if finnhub_api_key:
@@ -335,7 +335,7 @@ if finnhub_api_key:
 
 # Check for keys
 missing_keys = []
-if not google_api_key: missing_keys.append("Google")
+if not groq_api_key: missing_keys.append("Groq")
 if not fmp_api_key: missing_keys.append("FMP")
 if not finnhub_api_key: missing_keys.append("Finnhub")
 
@@ -344,11 +344,12 @@ if missing_keys:
 
 # --- Helper Functions ---
 def get_llm_config():
+    # Using Groq with Llama 3.1 8B Instant (14.4K requests/day free!)
     config_list = [
         {
-            "model": "gemini-1.5-flash",
-            "api_key": os.environ.get("GOOGLE_API_KEY"),
-            "api_type": "google" 
+            "model": "llama-3.1-8b-instant",
+            "api_key": os.environ.get("GROQ_API_KEY"),
+            "base_url": "https://api.groq.com/openai/v1"
         }
     ]
     return {
