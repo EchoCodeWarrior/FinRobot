@@ -2,6 +2,8 @@ streamlit==1.35.0
 python-dotenv
 pyautogen==0.2.27
 finrobot
+finnhub-python
+sec-api
 google-genai
 yfinance
 pandas
