@@ -1,6 +1,6 @@
 streamlit
 python-dotenv
-pyautogen
+pyautogen>=0.2.0
 finrobot
 google-genai
 yfinance
