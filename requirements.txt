@@ -10,7 +10,7 @@ backtrader
 reportlab
 PyPDF2
 ipython
-google-generativeai
+groq
 yfinance
 pandas
 numpy
