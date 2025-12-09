@@ -4,6 +4,11 @@ pyautogen==0.2.27
 finrobot
 finnhub-python
 sec-api
+praw
+mplfinance
+backtrader
+reportlab
+PyPDF2
 google-genai
 yfinance
 pandas
