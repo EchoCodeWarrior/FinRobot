@@ -9,6 +9,7 @@ mplfinance
 backtrader
 reportlab
 PyPDF2
+ipython
 google-genai
 yfinance
 pandas
@@ -16,3 +17,6 @@ numpy
 matplotlib
 plotly
 openai
+huggingface_hub
+scikit-learn
+nltk
